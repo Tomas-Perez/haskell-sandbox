@@ -1,0 +1,68 @@
+-- This file has been generated from package.yaml by hpack version 0.28.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 62c89fbd86141fed06f1465df3966d11d4c389a8daaa31df96c1c0a26edb781d
+
+name:           haskell-sandbox-project
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/haskell-sandbox-project#readme>
+homepage:       https://github.com/githubuser/haskell-sandbox-project#readme
+bug-reports:    https://github.com/githubuser/haskell-sandbox-project/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2018 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/haskell-sandbox-project
+
+library
+  exposed-modules:
+      Lib
+      ListUtil
+      Quadratic
+      SoccerTable
+  other-modules:
+      Paths_haskell_sandbox_project
+  hs-source-dirs:
+      src
+      src/soccerTable
+  build-depends:
+      base >=4.7 && <5
+    , containers
+  default-language: Haskell2010
+
+executable haskell-sandbox-project-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_haskell_sandbox_project
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , haskell-sandbox-project
+  default-language: Haskell2010
+
+test-suite haskell-sandbox-project-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_haskell_sandbox_project
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5,
+      containers
+    , haskell-sandbox-project
+  default-language: Haskell2010

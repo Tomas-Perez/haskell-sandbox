@@ -1,0 +1,5 @@
+resolver: ghc-8.4.3
+extra-deps:
+- ghc-8.4.1
+- ghc-paths-0.1.0.9
+allow-newer: true
