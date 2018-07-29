@@ -22,6 +22,19 @@ progress2 = checkProgress inProgressStandings finalStandings
 progress3 = checkProgress invalidStandings finalStandings
 progress4 = checkProgress invalidStandings2 finalStandings
 
+
+matchesTest = replicate 4 match1
+finalOutcomes = replicate 4 Away
+invalidOutcomes = replicate 4 Home
+validOutcomes = replicate 2 Away
+checkProgressTest = checkProgress2 finalStandings matchesTest
+
+progress5 = checkProgressTest finalOutcomes
+progress6 = checkProgressTest invalidOutcomes
+progress7 = checkProgressTest validOutcomes
+
+
+
 headerTest1 = Header 2 1
 standingsTest1 = Map.fromList [(barcelona, 1), (madrid, 1)]
 matchesTest1 = [Match barcelona madrid]
@@ -83,6 +96,7 @@ standingsTest4 = Map.fromList
     [
         (deportivo, 11), 
         (betis, 9), 
+        (sevilla, 6),
         (atlMadrid, 6), 
         (barcelona, 5), 
         (athBilbao, 4), 

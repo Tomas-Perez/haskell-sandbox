@@ -2,6 +2,7 @@ module SoccerTable where
 
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Debug.Trace
 
 
 data Header = Header { teamAmt :: Int, matchAmt :: Int } deriving (Show)
@@ -61,7 +62,7 @@ checkProgressDeltas' [] = Valid
 
 -- Generate all possible outcomes for 'n' matches
 allPossibleOutcomes :: Int -> [[Outcome]]
-allPossibleOutcomes matchAmt = mapM (const outcomeEnum) [1..matchAmt]
+allPossibleOutcomes matchAmt = rep matchAmt (listify outcomeEnum)
 
 -- Solve the SoccerTable by brute force
 bruteForceSolve :: SoccerTable -> [Outcome]
@@ -70,6 +71,39 @@ bruteForceSolve table@(SoccerTable h _ _) = bruteForceSolve' table possibilities
 
 bruteForceSolve' :: SoccerTable -> [[Outcome]] -> [Outcome]
 bruteForceSolve' table@(SoccerTable _ s ms) (os: oss) = 
-    case checkProgress (standingsFromOutcome ms os) s of
+    case checkProgress2 s ms os of
         Final -> os
         otherwise -> bruteForceSolve' table oss
+
+listify :: [a] -> [[a]]
+listify (x:xs) = [x] : listify xs
+listify [] = []
+
+prod :: [[a]] -> [[a]] -> [[a]]
+prod as bs = [a ++ b | a <- as, b <- bs]
+
+rep :: Int -> [[a]] -> [[a]]
+rep n as = foldl1 prod $ replicate n as
+
+checkProgress2 :: Standings -> [Match] -> [Outcome] -> Progress
+checkProgress2 st ((Match h a):ms) (o:os) 
+    | o == Home && homeWin >= 0 = checkProgress2 homeMap ms os --`debug` ("Home win: " ++ show homeMap)
+    | o == Away && awayWin >= 0 = checkProgress2 awayMap ms os --`debug` ("Away win: " ++ show awayMap)
+    | o == Draw && drawAway >= 0 && drawHome >= 0 = checkProgress2 drawMap ms os -- `debug` ("Draw: " ++ show drawMap)
+    | otherwise = Invalid
+    where 
+        homeWin = getHome - 3 --`debug` (show getHome)
+        awayWin = getAway - 3
+        drawAway = getAway - 1
+        drawHome = getHome - 1
+        getHome = st Map.! h
+        getAway = st Map.! a
+        homeMap = Map.insert h (homeWin) st 
+        awayMap = Map.insert a (awayWin) st
+        drawMap = Map.insert h (drawHome) (Map.insert a (drawAway) st)
+checkProgress2 st _ []
+    | nonFinalStandings == Map.empty = Final
+    | otherwise = Valid
+    where nonFinalStandings = (Map.filter (/= 0) st) --`debug` (show st)
+
+debug = flip trace

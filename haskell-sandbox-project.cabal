@@ -30,6 +30,7 @@ library
       ListUtil
       Quadratic
       SoccerTable
+      Testing
   other-modules:
       Paths_haskell_sandbox_project
   hs-source-dirs:

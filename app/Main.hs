@@ -1,7 +1,7 @@
 module Main where
 
 import Lib
-import SoccerTable
+import Testing
 
 main :: IO ()
 main = print result4
