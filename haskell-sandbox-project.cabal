@@ -31,11 +31,13 @@ library
       Quadratic
       SoccerTable
       Testing
+      TP2
   other-modules:
       Paths_haskell_sandbox_project
   hs-source-dirs:
       src
       src/soccerTable
+      src/tps
   build-depends:
       base >=4.7 && <5
     , containers
