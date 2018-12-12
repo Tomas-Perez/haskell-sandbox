@@ -43,17 +43,6 @@ findQueens'' qAmt current (p:ps)
 actualFindQueens :: Int -> Int -> [[Position]]
 actualFindQueens n qAmt = nub $ findQueens3 qAmt [] (possiblePositions n) []
 
--- findQueens2 :: Int -> [Position] -> [Position] -> [[Position]] -> [[Position]]
--- findQueens2 _ (solHead:solTail) [] solutions = findQueens2 qAmt solTail 
--- findQueens2 _ [] [] solutions = solutions
--- findQueens2 qAmt [] (p:ps) solutions = findQueens2 qAmt [p] ps solutions
--- findQueens2 qAmt current@(_:solTail) pool@(p:ps) solutions 
---     | qAmt == length current = case elem current solutions of
---         False -> findQueens2 qAmt solTail pool (current:solutions)
---         True  -> findQueens2 qAmt solTail pool solutions
---     | any (canEat p) current = findQueens2 qAmt current ps solutions
---     | otherwise = findQueens2 qAmt (p:current) ps solutions
-
 findQueens3 :: Int -> [Position] -> [Position] -> [[Position]] -> [[Position]]
 findQueens3   _  _                   []          solutions = solutions
 findQueens3 qAmt []                  pool solutions = foldMap (\x -> findQueens3 qAmt [x] (filter (x /=) pool) solutions) pool
